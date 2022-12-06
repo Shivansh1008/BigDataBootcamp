@@ -173,7 +173,10 @@ lst = [1,2,3,"Hi",[45,54, "iNeuron"], "Big Data"]
 print(lst[4][2])
 
 Q38. Take a list as an input from the user and find the length of the list.
-
+a=[]
+for i in input().split():
+  a.append(i)
+print(len(a))
 
 Q39. Add the word "Big" in the 3rd index of the given list.
 lst = ["Welcome", "to", "Data", "course"]
@@ -194,13 +197,24 @@ print(a+b)
 output = ('My', 'name', 'is', 'shivansh', 'singh')
 
 Q44. Take a tuple as an input and print the count of elements in it.
-
+a=[]
+for i in input().split():
+  a.append(i)
+a=tuple(a)
+print(a)
+print(len(a))
 
 Q45. What are sets in Python?
+Sets are the store values the only diffrence it has with list that it contains only unique values
 
 Q46. How can you create a set?
+a={"delhi","pune","indore"}
 
 Q47. Create a set and add "iNeuron" in your set.
+a={"delhi","pune","indore"}
+a.add("iNeuron")
+print(a)
+
 
 Q48. Try to add multiple values using add() function.
 
