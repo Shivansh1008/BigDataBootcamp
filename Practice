@@ -1,0 +1,311 @@
+#Q22
+a=int(input("Tell me your age : "))
+if a>=18:
+    print("I can vote")
+else:
+    print("I can't vote")
+
+
+#Q23
+numbers = [12, 75, 150, 180, 145, 525, 50]
+sum=0
+for a in numbers:
+  if a%2==0:
+    sum=sum +a
+print(sum)
+
+
+#Q24
+a,b,c=input("enter 3 number: ").split()
+if a>b:
+  if a>c: 
+    print(a,"is greatest value")
+  else:
+    print(c,"is greatest value")
+else:
+    if b>c: 
+      print(b,"is greatest value")
+    else:
+      print(c,"is greatest value")  
+
+#Q24
+numbers = [12, 75, 150, 180, 145, 525, 50]
+req_list=[]
+for x in numbers:
+  if (x%5==0 and x<150):
+    req_list.append(x)
+  if (x>500):
+    break
+print(req_list)
+
+#Q29
+string="Big Data iNeuron"
+desired_output=string[-7:]
+desired_output=desired_output[::-1]
+print(desired_output)
+
+#Q28
+string="Big Data iNeuron"
+desired_output=string[-7:]
+print(desired_output)
+
+#Q30
+string="Big Data iNeuron"
+desired_output=string[-1::-1]
+print(desired_output)
+
+
+#Q76
+n=int(input())
+f=1
+if (n==0 or n==1 ):
+  f=1
+else:
+  for i in range(1,n+1):
+    f=f*i
+    i=+1
+print(f)
+
+#Q77
+p,r,t=[int(x) for x in input("Enter the principal amount,rate of interest,time period respectively: ").split()]
+
+SI=(p*r*t)/100
+print(SI)
+
+#Q78
+p,r,t=[int(x) for x in input("Enter the principal amount,rate of interest,time period respectively: ").split()]
+A=0
+A = p*((1+ (r/100))**t)
+print(A)
+
+
+#Q79
+n=int(input("enter the number which you want to check: "))
+count=0
+if n==0 or n==1:
+  print(n,'is neither prime nor composite')
+else:
+    for i in range (2,n+1):
+      if n%i==0:
+        count+=1
+    if count==1:
+      print(n,'is prime number')
+    else:
+      print(n,'is composite number')
+
+#80
+n=str(input("enter the number which you want to check: "))
+l=[]
+result=0
+for i in n:
+  l.append(i)
+n=int(n)
+a=int(len(l))
+for x in l:
+  x=int(x)
+  result=result +pow(x,a)
+if result==n:
+  print(n,"is an armstrong number")
+else:
+  print(n,"is not an armstrong number")
+
+#Q81
+n=int(input("please enter the size of list: "))
+l=[]
+for i in range(n):
+  a=input("enter the element of list: ")
+  l.append(a)
+print(l)
+l=len(n)
+a=n[0]
+n[0]=n[l-1]
+n[l-1]=a
+print(n)
+
+#Q81
+
+n= int(input("enter the n-th Fibonacci Number: "))
+a=0
+b=1
+sum=0
+if n==0:
+    print("0")
+    if n==1:
+      print("1")
+for i in range(1,n-1):
+    a=b
+    b=sum
+    sum=a+b
+print(sum)
+
+#Q83 
+n=int(input("please enter the size of list: "))
+l=[]
+for i in range(n):
+  a=input("enter the element of list: ")
+  l.append(a)
+print(l)
+#l=[1,2,3,4,5,6,7,8,9]
+x,y=[int(x) for x in input("which two place you want to swap: ").split()]
+z=l[x]
+l[x]=l[y]
+l[y]=z
+print(l)
+
+
+#Q84
+l=[1,2,3,4,5,6,7,8,9,10,11]
+n=int(input('enter the value n for n largest element: '))
+l.sort()
+print(l[n])
+
+#Q85
+l=[1,2,3,4,5,6,7,8,9,10,11]
+s=0
+for i in range(len(l)):
+  s=s+l[i]
+print(s)
+
+#Q86
+
+n=str(input("enter the string that need to be checked: "))
+l=list(n)
+l.reverse()
+if l==list(n):
+  n=str(n)
+  print(n,"is palindrome")
+else:
+    print(n,"is not palindrome")
+
+#Q87
+
+st=('ineuron')
+print(st)
+n=int(input("enter the i'th element from a string that need to remove: "))
+l=list(st)
+print(l)
+l.pop(n)
+print(str(l))
+
+#Q88
+
+n=list(input("enter the input string that need to be checked : "))
+m=list(input("enter the input substring that need to be checked: "))
+l=[]
+for i in m:
+  if i in n:
+    l.append(i)
+    if l==m:
+      print(m,"is a substring of a given string")
+  else:
+      print(m,"is a not a substring of a given string")
+
+#Q89
+
+n=("list of words for this question").split()
+k=int(input("enter the value of k: "))
+l=[]
+for i in n:
+  if len(i)>k:
+    l.append(i)
+print(l)
+
+#Q90
+
+d = {
+  "brand": "toyta",
+  "car": "fortunar",
+  "year": 2000,
+  "engine":'BS4',
+  "fuel" : "petrol",
+  "old_engine":"BS4",
+  "relauch":2000
+}
+print(set(d.values()))
+
+#Q91
+
+d = {
+  "brand": "toyta",
+  "car": "fortunar",
+  "year": 2000,
+  "engine":'BS4',
+  "fuel" : "petrol",
+  "old_engine":"BS4",
+  "relauch":2000
+}
+
+d2={"key1":"inueron",
+    "key2":"learning",
+    "key3":"platform"
+}
+
+d2.update(d)
+print(d2)
+
+#Q93
+
+i= [9, 5, 6]
+t1=[]
+for x in i:
+  t=(x,pow(x,3))
+  t1.append(t)
+print(t1)
+
+#Q94
+
+t1  = (7, 2)
+t2 = (7, 8)
+L=[]
+for i in t1:
+  for j in t2:
+    T=(i,j)
+    L.append(T)
+for i in t2:
+  for j in t1:
+    T=(i,j)
+    L.append(T)
+print(L)
+
+
+#Q95
+
+I= [('for', 24), ('Geeks', 8), ('Geeks', 30)]
+I = sorted(I, key = lambda x: x[1])
+print(I)
+
+#Q96
+
+for i in range(6):
+  print('*'*i,end="")
+  print('\r')
+
+#Q97
+
+for i in range(6):
+  for j in range(1,6-i):
+    print(" ",end="")
+  for j in range(1,i+1):
+    print("*",end="")
+  print()
+
+#98
+for i in range(6):
+  for j in range(1,6-i):
+    print(" ",end="")
+  for j in range(1,i+1):
+    print("*",end=" ")
+  print()
+    
+#99
+for i in range(1,6):
+  for j in range (1,i+1):
+    print(j,end=" ")
+  print('\r')
+
+
+#100
+for i in range(65,70):
+  for j in range (65,i+1):
+    print(chr(i),end=" ")
+  print('\r')
