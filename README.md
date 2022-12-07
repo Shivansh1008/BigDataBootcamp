@@ -178,8 +178,13 @@ for i in input().split():
   a.append(i)
 print(len(a))
 
-Q39. Add the word "Big" in the 3rd index of the given list.
+Q39. Add the word "Big" in the 3rd index of the given list.   lst = ["Welcome", "to", "Data", "course"]
 lst = ["Welcome", "to", "Data", "course"]
+a=lst[:2:1]
+b=lst[2:4:1]
+c=["big"]
+d=a+c+b
+print(d)
 
 Q40. What is a tuple? How is it different from list?
 Tuple is similar to list it also store values it is represented by () and another diffrence is it is immutable 
@@ -217,46 +222,109 @@ print(a)
 
 
 Q48. Try to add multiple values using add() function.
+a={"delhi","pune","indore"}
+a.update(["Mumbai","jaipur"])
+print(a)
+
 
 Q49. How is update() different from add()?
+update is used to add multiple values while add is used o single values
 
 Q50. What is clear() in sets?
+a={"delhi","pune","indore"}
+a.update(["Mumbai","jaipur"])
+print(a)
+a.clear()
+print(a)
 
 Q51. What is frozen set?
+Frozen set is just an immutable version of a Python set object.
+vowels = ('a', 'e', 'i', 'o', 'u')
+fSet = frozenset(vowels)
 
 Q52. How is frozen set different from set?
+While elements of a set can be modified at any time, elements of the frozen set remain the same after creation.
 
 Q53. What is union() in sets? Explain via code.
+union is adding all uniques elememt.
+myset = {"apple", "banana", "cherry"}
+un_set={"mango","grapes"}
+new_set=myset.union(un_set)
+print(new_set)
 
 Q54. What is intersection() in sets? Explain via code.
+function will return all the common element from the sets where intersection is applied
+x = {"apple", "banana", "cherry"}
+y = {"google", "microsoft", "apple"}
+z = x.intersection(y)
+print(z)
 
 Q55. What is dictionary ibn Python?
+it stores value in key value pair
 
-Q56. How is dictionary different from all other data structures.
+Q56. How is dictionary different from all other data structures
+Dictionaries are written with curly brackets, and have keys and values:.
 
 Q57. How can we delare a dictionary in Python?
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
 
 Q58. What will the output of the following?
-
 var = {}
 print(type(var))
+class <'dict'>
+
 Q59. How can we add an element in a dictionary?
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+thisdict["color"] = "red"
+print(thisdict)
 
 Q60. Create a dictionary and access all the values in that dictionary.
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict.values())
 
 Q61. Create a nested dictionary and access all the element in the inner dictionary.
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964,
+  "Misc":{
+    "engine_rating" : 9,
+    "overall_rating" : 8
+  }
+}
+print(thisdict["Misc"].values())
 
 Q62. What is the use of get() function?
+The get() method returns the value of the item with the specified key.
 
 Q63. What is the use of items() function?
+The items() method will return each item in a dictionary, as tuples in a list.
+
+dict_items([('brand', 'Ford'), ('model', 'Mustang'), ('year', 1964)])
 
 Q64. What is the use of pop() function?
+The pop() method removes the element at the specified position.
 
 Q65. What is the use of popitems() function?
+The popitem() method removes the item that was last inserted into the dictionary.
 
 Q66. What is the use of keys() function?
+The keys() method will return a list of all the keys in the dictionary.
 
 Q67. What is the use of values() function?
+The values() method will return a list of all the values in the dictionary.
 
 Q68. What are loops in Python?
 
