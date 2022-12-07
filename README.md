@@ -429,6 +429,11 @@ for i in range(1,n-1):
 print(sum)
 
 Q82. Write a Python program to interchange the first and last element in a list.
+l=[1,2,3,4,5,6,7,8,9]
+a=l[0]
+l[0]=l[8]
+l[8]=a
+print(l)
 
 Q83. Write a Python program to swap two elements in a list.
 n=int(input("please enter the size of list: "))
@@ -535,6 +540,12 @@ Q92. Write a Python program to convert a list of tuples into dictionary.
 
 Input : [('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]
 Output : {'Sachin': 10, 'MSD': 7, 'Kohli': 18, 'Rohit': 45}
+
+Input = [('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]
+z=dict((x, y) for x, y in Input)
+print(z)
+
+
 Q93. Write a Python program to create a list of tuples from given list having number and its cube in each tuple.
 Input: list = [9, 5, 6]
 Output: [(9, 729), (5, 125), (6, 216)]
