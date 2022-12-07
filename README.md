@@ -327,20 +327,36 @@ Q67. What is the use of values() function?
 The values() method will return a list of all the values in the dictionary.
 
 Q68. What are loops in Python?
+A for loop is used for iterating over a sequence 
 
 Q69. How many type of loop are there in Python?
+for ,while
 
 Q70. What is the difference between for and while loops?
+For loop is used when the number of iterations is already known. While loop is used when the number of iterations is already Unknown.
 
 Q71. What is the use of continue statement?
+With the continue statement we can stop the current iteration of the loop, and continue with the next
 
 Q72. What is the use of break statement?
+With the break statement we can stop the loop before it has looped through all the items
 
 Q73. What is the use of pass statement?
+for loops cannot be empty, but if you for some reason have a for loop with no content, put in the pass statement to avoid getting an error.
 
 Q74. What is the use of range() function?
+The range() function returns a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and ends at a specified number.
+The range() function defaults to increment the sequence by 1, however it is possible to specify the increment value by adding a third parameter: range(2, 30, 3):
 
 Q75. How can you loop over a dictionary?
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+for i in thisdict:    #if you want values use for i in thisdict.values():
+    print(i)
+
 
 Coding problems
 Q76. Write a Python program to find the factorial of a given number.
