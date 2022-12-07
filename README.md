@@ -360,53 +360,220 @@ for i in thisdict:    #if you want values use for i in thisdict.values():
 
 Coding problems
 Q76. Write a Python program to find the factorial of a given number.
+n=int(input())
+f=1
+if (n==0 or n==1 ):
+  f=1
+else:
+  for i in range(1,n+1):
+    f=f*i
+    i=+1
+print(f)
 
 Q77. Write a Python program to calculate the simple interest. Formula to calculate simple interest is SI = (PRT)/100
 
+p,r,t=[int(x) for x in input("Enter the principal amount,rate of interest,time period respectively: ").split()]
+SI=(p*r*t)/100
+print(SI)
+
 Q78. Write a Python program to calculate the compound interest. Formula of compound interest is A = P(1+ R/100)^t.
+
+p,r,t=[int(x) for x in input("Enter the principal amount,rate of interest,time period respectively: ").split()]
+SI=(p*r*t)/100
+print(SI)
 
 Q79. Write a Python program to check if a number is prime or not.
 
+n=int(input("enter the number which you want to check: "))
+count=0
+if n==0 or n==1:
+  print(n,'is neither prime nor composite')
+else:
+    for i in range (2,n+1):
+      if n%i==0:
+        count+=1
+    if count==1:
+      print(n,'is prime number')
+    else:
+      print(n,'is composite number')
+
 Q80. Write a Python program to check Armstrong Number.
+n=str(input("enter the number which you want to check: "))
+l=[]
+result=0
+for i in n:
+  l.append(i)
+n=int(n)
+a=int(len(l))
+for x in l:
+  x=int(x)
+  result=result +pow(x,a)
+if result==n:
+  print(n,"is an armstrong number")
+else:
+  print(n,"is not an armstrong number")
 
 Q81. Write a Python program to find the n-th Fibonacci Number.
+n= int(input("enter the n-th Fibonacci Number: "))
+a=0
+b=1
+sum=0
+if n==0:
+    print("0")
+    if n==1:
+      print("1")
+for i in range(1,n-1):
+    a=b
+    b=sum
+    sum=a+b
+print(sum)
 
 Q82. Write a Python program to interchange the first and last element in a list.
 
 Q83. Write a Python program to swap two elements in a list.
+n=int(input("please enter the size of list: "))
+l=[]
+for i in range(n):
+  a=input("enter the element of list: ")
+  l.append(a)
+print(l)
+#l=[1,2,3,4,5,6,7,8,9]
+x,y=[int(x) for x in input("which two place you want to swap: ").split()]
+z=l[x]
+l[x]=l[y]
+l[y]=z
+print(l)
 
 Q84. Write a Python program to find N largest element from a list.
+l=[1,2,3,4,5,6,7,8,9,10,11]
+n=int(input('enter the value n for n largest element: '))
+l.sort()
+print(l[n])
 
 Q85. Write a Python program to find cumulative sum of a list.
+l=[1,2,3,4,5,6,7,8,9,10,11]
+s=0
+for i in range(len(l)):
+  s=s+l[i]
+print(s)
 
 Q86. Write a Python program to check if a string is palindrome or not.
+n=str(input("enter the string that need to be checked: "))
+l=list(n)
+l.reverse()
+if l==list(n):
+  n=str(n)
+  print(n,"is palindrome")
+else:
+    print(n,"is not palindrome")
 
 Q87. Write a Python program to remove i'th element from a string.
+st=('ineuron')
+print(st)
+n=int(input("enter the i'th element from a string that need to remove: "))
+l=list(st)
+print(l)
+l.pop(n)
+print(str(l))
 
 Q88. Write a Python program to check if a substring is present in a given string.
+n=list(input("enter the input string that need to be checked : "))
+m=list(input("enter the input substring that need to be checked: "))
+l=[]
+for i in m:
+  if i in n:
+    l.append(i)
+    if l==m:
+      print(m,"is a substring of a given string")
+  else:
+      print(m,"is a not a substring of a given string")
 
 Q89. Write a Python program to find words which are greater than given length k.
+n=list(input("enter the input string that need to be checked : "))
+m=list(input("enter the input substring that need to be checked: "))
+l=[]
+for i in m:
+  if i in n:
+    l.append(i)
+    if l==m:
+      print(m,"is a substring of a given string")
+  else:
+      print(m,"is a not a substring of a given string")
 
 Q90. Write a Python program to extract unquire dictionary values.
+d = {
+  "brand": "toyta",
+  "car": "fortunar",
+  "year": 2000,
+  "engine":'BS4',
+  "fuel" : "petrol",
+  "old_engine":"BS4",
+  "relauch":2000
+}
+print(set(d.values()))
 
 Q91. Write a Python program to merge two dictionary.
+d = {
+  "brand": "toyta",
+  "car": "fortunar",
+  "year": 2000,
+  "engine":'BS4',
+  "fuel" : "petrol",
+  "old_engine":"BS4",
+  "relauch":2000
+}
+
+d2={"key1":"inueron",
+    "key2":"learning",
+    "key3":"platform"
+}
+
+d2.update(d)
+print(d2)
 
 Q92. Write a Python program to convert a list of tuples into dictionary.
 
 Input : [('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]
 Output : {'Sachin': 10, 'MSD': 7, 'Kohli': 18, 'Rohit': 45}
 Q93. Write a Python program to create a list of tuples from given list having number and its cube in each tuple.
-
 Input: list = [9, 5, 6]
 Output: [(9, 729), (5, 125), (6, 216)]
-Q94. Write a Python program to get all combinations of 2 tuples.
 
+i= [9, 5, 6]
+t1=[]
+for x in i:
+  t=(x,pow(x,3))
+  t1.append(t)
+print(t1)
+
+Q94. Write a Python program to get all combinations of 2 tuples.
 Input : test_tuple1 = (7, 2), test_tuple2 = (7, 8)
 Output : [(7, 7), (7, 8), (2, 7), (2, 8), (7, 7), (7, 2), (8, 7), (8, 2)]
-Q95. Write a Python program to sort a list of tuples by second item.
+t1  = (7, 2)
+t2 = (7, 8)
+L=[]
+for i in t1:
+  for j in t2:
+    T=(i,j)
+    L.append(T)
+for i in t2:
+  for j in t1:
+    T=(i,j)
+    L.append(T)
+print(L)
 
+
+
+
+Q95. Write a Python program to sort a list of tuples by second item.
 Input : [('for', 24), ('Geeks', 8), ('Geeks', 30)] 
 Output : [('Geeks', 8), ('for', 24), ('Geeks', 30)]
+
+I= [('for', 24), ('Geeks', 8), ('Geeks', 30)]
+I = sorted(I, key = lambda x: x[1])
+print(I)
+
+
 Q96. Write a python program to print below pattern.
 
 * 
@@ -414,6 +581,12 @@ Q96. Write a python program to print below pattern.
 * * * 
 * * * * 
 * * * * * 
+
+for i in range(6):
+  print('*'*i,end="")
+  print('\r')
+  
+  
 Q97. Write a python program to print below pattern.
 
     *
@@ -421,6 +594,12 @@ Q97. Write a python program to print below pattern.
   ***
  ****
 *****
+for i in range(6):
+  for j in range(1,6-i):
+    print(" ",end="")
+  for j in range(1,i+1):
+    print("*",end="")
+  print()
 Q98. Write a python program to print below pattern.
 
     * 
@@ -428,6 +607,12 @@ Q98. Write a python program to print below pattern.
   * * * 
  * * * * 
 * * * * * 
+for i in range(6):
+  for j in range(1,6-i):
+    print(" ",end="")
+  for j in range(1,i+1):
+    print("*",end=" ")
+  print()
 Q99. Write a python program to print below pattern.
 
 1 
@@ -435,6 +620,12 @@ Q99. Write a python program to print below pattern.
 1 2 3 
 1 2 3 4 
 1 2 3 4 5
+
+for i in range(1,6):
+  for j in range (1,i+1):
+    print(j,end=" ")
+  print('\r')
+  
 Q100. Write a python program to print below pattern.
 
 A 
@@ -442,3 +633,8 @@ B B
 C C C 
 D D D D 
 E E E E E 
+
+for i in range(65,70):
+  for j in range (65,i+1):
+    print(chr(i),end=" ")
+  print('\r')
