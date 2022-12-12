@@ -10,22 +10,30 @@ Q3. How do you select rows from a Pandas DataFrame based on a condition?
 
 
 Q4. How do you rename columns in a Pandas DataFrame?
-df.rename(columns = {'':'Sex'})
+df.rename(columns = {'job':'occupation'})
 
 
 Q5. How do you drop columns in a Pandas DataFrame?
+df.drop('Age')
 
 Q6. How do you find the unique values in a column of a Pandas DataFrame?
+df['Column_name'].unique()
 
-Q7. How do you find the number of missing values in each column of a Pandas DataFrame?
+Q7. How do you find the number of missing values in each column of a Pandas DataFrame
+df.isnull().sum()
+
 
 Q8. How do you fill missing values in a Pandas DataFrame with a specific value?
+df= df.fillna(x)  #here x = value whcih you want to relace NAN with
 
 Q9. How do you concatenate two Pandas DataFrames?
+print(pd.concat([df1, df2]))   # here df1 and df2 are two dataframe whcih you want to concatenate
 
 Q10. How do you merge two Pandas DataFrames on a specific column?
+pd.merge(df1, df2 ,on =#)  here df1 and df2 are two dataframe which need to be merged and # represent the on conditon if not provided then it will bydefault take the common column  
 
 Q11. How do you group data in a Pandas DataFrame by a specific column and apply an aggregation function?
+
 
 Q12. How do you pivot a Pandas DataFrame?
 
