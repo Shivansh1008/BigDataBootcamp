@@ -1,13 +1,13 @@
 PandasAssignment
 Q1. How do you load a CSV file into a Pandas DataFrame?
+df=pd.read_csv("https://raw.githubusercontent.com/Likith25/Titanic_dataset/main/data/Titanic-Train-Data.csv")
 
 
 Q2. How do you check the data type of a column in a Pandas DataFrame?
 df=pd.read_csv("https://raw.githubusercontent.com/Likith25/Titanic_dataset/main/data/Titanic-Train-Data.csv")
 
 Q3. How do you select rows from a Pandas DataFrame based on a condition?
-
-
+df[(df['column_name']<>==.....condition_name)]
 
 Q4. How do you rename columns in a Pandas DataFrame?
 df.rename(columns = {'job':'occupation'})
@@ -37,6 +37,8 @@ Q11. How do you group data in a Pandas DataFrame by a specific column and apply 
 print(df.groupby("column_name").mean())
 
 Q12. How do you pivot a Pandas DataFrame?
+The pivot() function is used to reshaped a given DataFrame organized by given index / column values.
+df.pivot(index='column_name', columns='column_name', values='column_name')  
 
 
 Q13. How do you change the data type of a column in a Pandas DataFrame?
@@ -77,5 +79,7 @@ Q23. How do you create a new column in a DataFrame based on the values of anothe
 df['ineuron'] = df['new_column']+df["new_column"]   #Here we can do any operation with th column 
 
 Q24. How do you remove duplicates from a DataFrame?
+ df. drop_duplicates()
 
 Q25. What is the difference between .loc and .iloc in Pandas?
+ loc gets DataFrame rows & columns by labels/names and iloc[] gets by integer Index/position
