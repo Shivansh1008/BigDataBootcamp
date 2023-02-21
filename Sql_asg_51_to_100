@@ -1,0 +1,221 @@
+Q51)
+SELECT name,population,area
+FROM World
+WHERE area > 3000000 or population > 25000000;
+
+Q52)
+select name from Customer where referee_id != 2 or referee_id is null;
+
+Q53)
+SELECT C.Name FROM Customers C LEFT JOIN Orders O ON C.Id = O.CustomerId --WHERE O.CustomerId is NULL;
+where C.Id not in (select customerId from Orders);
+
+q54
+Select employee_id,count(*) over (PARTITION BY team_id) from Employee;
+
+q55 -- need to ask
+Select * from  Calls c , Country ct ,Person p 
+where p.id in (c.caller_id,callee_id)
+and SUBSTRING(p.phone_number,1,3) = ct.country_code
+
+q56
+select player_id,device_id from (
+select player_id,device_id,ROW_NUMBER() over(partition by player_id order by event_date) rn
+from Activity)a
+where rn =1;
+
+
+Q57
+select customer_number from (
+select distinct customer_number,count(order_number) over (partition by customer_number )ct
+ from Orders order by ct desc)a
+ limit 1;
+
+
+ Q58
+ SELECT
+    DISTINCT t1.seat_id
+FROM Cinema AS t1 JOIN Cinema AS t2
+ON abs(t1.seat_id - t2.seat_id) = 1
+AND t1.free = 1 AND t2.free = 1
+ORDER BY 1; 
+
+--q59
+SELECT name from SalesPerson where name not in
+(
+select s.name from Orders o join Company c
+on o.com_id=c.com_id
+JOIN SalesPerson s
+on s.sales_id=o.sales_id
+where c.name ='RED') ;
+
+--Q60
+select *,
+case 
+when (x+y>=z and x+z>=y and y+z>=x) then 'YES' 
+else 'NO' END as triangle  from Triangle;
+
+--q61
+Select min(abs (p1.x-p2.x)) from Point p1,Point p2
+where p1.x != p2.x
+
+--Q62
+select actor_id,director_id from ActorDirector
+group by 1,2
+having count(*)>=3
+
+--q63
+Select p.product_name,s.year,s.price from Product p,Sales s
+where s.product_id=p.product_id;
+
+--Q64
+Select p.project_id , avg(e.employee_id) from Project p,Employee e 
+where e.employee_id=p.employee_id
+group by p.project_id;
+
+--65
+select seller_id from (
+Select s.seller_id,sum(s.price) sm from Sales s,Product p
+where s.product_id=p.product_id
+group by seller_id
+order by sm desc
+limit 2) a;
+
+--q66
+Select s.buyer_id from Sales s,Product p
+where s.product_id=p.product_id
+and p.product_name='S8'
+and s.buyer_id not in
+(select s.buyer_id
+ from Sales s,Product p
+where s.product_id=p.product_id
+and p.product_name='iPhone');
+
+--q67 need to be ask
+
+--q68
+SELECT
+    gender,
+    day,
+    SUM(score_points) OVER(PARTITION BY gender ORDER BY day) as total
+FROM Scores;
+
+
+
+--q69   Need to understand
+select min(log_id) as start_id, max(log_id) as end_id
+from (select l.log_id, (l.log_id - l.row_num) as diff
+      from (select log_id, row_number() over() as row_num from Logs) l
+      ) l2
+group by diff;
+
+--70
+select a.student_id, a.student_name, b.subject_name, count(c.subject_name) as attended_exams
+from Students as a
+join Subjects as b
+left join Examinations as c
+on a.student_id = c.student_id and b.subject_name = c.subject_name
+group by a.student_id, b.subject_name;
+
+
+--Q71
+select  employee_id from Employees where manager_id in (
+Select employee_id from Employees where manager_id =1
+and employee_id !=1)
+union 
+Select employee_id from Employees where manager_id =1
+and employee_id !=1
+union 
+select  employee_id from Employees where manager_id in(
+select  employee_id from Employees where manager_id in (
+Select employee_id from Employees where manager_id =1
+and employee_id !=1));
+
+
+--Q72
+Select DATE_FORMAT(trans_date, '%Y-%m') AS month, country ,
+count(*) trans_count,
+count(IF(state='approved', 1, null)) approved_count,
+sum(amount) trans_total_amount , 
+sum(IF(state='approved', amount, 0)) approved_total_amount
+from Transactions
+group by month,country
+;
+
+
+--q73
+select avg (percentage) from (
+Select  (count(r.post_id)/count(a.post_id))*100 as percentage from Actions a
+left join Removals r
+ON r.post_id=a.post_id
+where a.action='report'
+and a.extra='spam'
+group by a.action_date)a
+
+--q74
+Select count(*)/(select count(distinct player_id) from Activity)  from Activity a1, Activity a2
+where a1.player_id=a2.player_id
+and datediff(a1.event_date,a2.event_date)=1;
+
+
+--q76
+select Salaries.company_id, Salaries.employee_id, Salaries.employee_name, 
+    round(case when salary_max<1000 then Salaries.salary
+               when salary_max>=1000 and salary_max<=10000 then Salaries.salary * 0.76
+               else Salaries.salary * 0.51 end, 0) as salary
+from Salaries inner join (
+    select company_id, max(salary) as salary_max
+    from Salaries
+    group by company_id) as t
+on Salaries.company_id = t.company_id;
+
+
+--q77
+Select e.left_operand,e.operator,e.right_operand,
+(case when v1.value>v2.value then 'False'
+when v1.value<v2.value then 'True'
+when v1.value=v2.value then 'false'
+end) value from Expressions e left join Variables v1 
+on e.left_operand= v1.name 
+left join Variables v2
+on e.right_operand=v2.name;
+
+--Q79
+SELECT name FROM Employee ORDER BY name;
+
+--Q80
+select *,round(((spend-prev)/prev)*100,2) from (
+Select * ,lag(spend,1) over() prev from user_transactions)a;
+
+--Q81
+Select item_type,round((500000/sum(square_footage))*
+(select count(*) item_count from inventory where item_type='prime_eligible'),0) Cnt
+from inventory where item_type='prime_eligible'
+union
+select item_type,CEILING((value)/(Select sum(square_footage)cnt
+from inventory where item_type='not_prime')) from 
+(select item_type, ((500000-(round((500000/cnt),0)*cnt)) *
+(select count(*)  from inventory where item_type='not_prime')) as value
+from  (Select item_type,sum(square_footage)cnt
+from inventory where item_type='prime_eligible')a)b
+
+
+--Q82
+select yu from (
+Select  u1.user_id yu,u1.event_date dt, 
+EXTRACT(MONTH FROM u1.event_date) AS mth ,
+EXTRACT(MONTH FROM u2.event_date) AS mths
+from user_actions u1,user_actions u2
+where u1.user_id =u2.user_id )a
+where  mth =5 and mths=6
+
+--q83 CTE need to be revise
+
+--q84
+select user_id, (case  
+when status IN ('New','EXISTING')  AND paid IS NOT NULL then 'EXISTING'
+when status IN ('New','EXISTING')  AND paid IS NULL then 'CHURN'
+END)NEW_STATUS FROM (
+Select a.user_id user_id ,a.status status ,d.paid paid
+from  advertiser a left join daily_pay d
+on d.user_id=a.user_id)c;
