@@ -1,0 +1,353 @@
+Q1. SELECT * FROM CITY WHERE COUNTRYCODE='USA' AND POPULATION >100000;
+
+Q2. SELECT NAME FROM CITY WHERE COUNTRYCODE='USA' AND POPULATION >120000;
+
+Q3. SELECT * FROM CITY;
+
+
+Q4. SELECT * FROM CITY WHERE ID =1661;
+
+Q5. SELECT * FROM CITY WHERE COUNTRYCODE='JPN';
+
+Q6 SELECT NAME FROM CITY WHERE COUNTRYCODE='JPN';
+
+Q7 SELECT CITY,STATE FROM STATION;
+
+Q8 SELECT DISTINCT CITY FROM STATION WHERE MOD(ID,2)=0;
+
+Q9 SELECT DISTINCT ((SELECT COUNTCITY FROM STATION - (SELECT  COUNT(distinct CITY FROM STATION )) AS DIFFRENCE FROM STATION ;
+
+Q10 SELECT * FROM  
+(SELECT CITY, LENGTH(CITY) AS LEN FROM STATION 
+ORDER BY LEN DESC)
+WHERE ROWNUM=1
+UNION 
+SELECT * FROM  
+(SELECT  CITY,LENGTH(CITY)AS LEN FROM STATION 
+ORDER BY LEN ASC)
+WHERE ROWNUM=1;
+
+Q11SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE ('A%')
+UNION 
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('I%')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('E%')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('O%')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('U%');
+
+Q12 
+
+SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE ('%A')
+UNION 
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('%I')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('%E')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('%O')
+UNION
+SELECT DISTINCT  CITY FROM STATION WHERE CITY LIKE ('%U');
+
+Q13
+
+SELECT COST_CENTER_CD FROM ge_import_actual_capex WHERE COST_CENTER_CD NOT LIKE ('A%')
+INTERSECT 
+SELECT COST_CENTER_CD FROM ge_import_actual_capex WHERE COST_CENTER_CD NOT LIKE ('I%')
+INTERSECT
+SELECT COST_CENTER_CD FROM ge_import_actual_capex WHERE COST_CENTER_CD NOT LIKE ('E%')
+INTERSECT
+SELECT COST_CENTER_CD FROM ge_import_actual_capex WHERE COST_CENTER_CD NOT LIKE ('O%')
+INTERSECT
+SELECT COST_CENTER_CD FROM ge_import_actual_capex WHERE COST_CENTER_CD NOT LIKE ('U%');
+
+Q14
+
+SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE ('%A')
+INTERSECT 
+SELECT DISTINCT  CITY FROM STATION WHERE CITY NOT LIKE ('%I')
+INTERSECT
+SELECT DISTINCT  CITY FROM STATION WHERE CITY NOT LIKE ('%E')
+INTERSECT
+SELECT DISTINCT  CITY FROM STATION WHERE CITY NOT LIKE ('%O')
+INTERSECT
+SELECT DISTINCT  CITY FROM STATION WHERE CITY NOT LIKE ('%U');
+
+
+Q17
+SELECT DISTINCT PRODUCT_ID FROM 
+(
+SELECT * FROM SALES WHERE SALE_DATE BETWEEN TO_DATE('01/01/2019', 'DD/MM/YYYY')AND
+TO_DATE('31/03/2019', 'DD/MM/YYYY') --1,2
+MINUS 
+SELECT * FROM SALES WHERE SALE_DATE NOT BETWEEN TO_DATE('01/01/2019', 'DD/MM/YYYY')AND
+TO_DATE('31/03/2019', 'DD/MM/YYYY')--2,3
+
+Q19
+SELECT ROUND(
+(
+(SELECT COUNT(*)  FROM DELIVERY WHERE ORDER_DATE = CUSTOMER_PREF_DELIVERY_DATE )
+/(SELECT COUNT(*)  FROM DELIVERY)
+*100)
+,2)
+AS PERCENTAGE FROM DUAL;
+
+Q21)SELECT COUNT(EMPLOYEE_ID)FROM EMPLOYEE GROUP BY TEAM_ID
+
+Q22)SELECT (CASE WHEN CNT = 15 THEN 'COLD'
+ WHEN CNT = 25 THEN  'HOT'
+ELSE 'WARM'
+END )AS WHEATHER_TYPE ,COUNTRIES FROM 
+(SELECT AVG(W.WEATHER_STATE)AS CNT,S.COUNTRIES FROM WEATHER W,COUNTRIES S 
+WHERE W.COUNTRY_ID=S.COUNTRY_ID AND 
+W.DAY BETWEEN TO_DATE('1-11-2019','DD-MM-YYYY') AND TO_DATE('30-11-2019','DD-MM-YYYY')
+GROUP BY W.COUNTRY_ID,S.COUNTRIES);
+
+Q17
+SELECT DISTINCT PRODUCT_ID FROM 
+(
+SELECT * FROM SALES WHERE SALE_DATE BETWEEN TO_DATE('01/01/2019', 'DD/MM/YYYY')AND
+TO_DATE('31/03/2019', 'DD/MM/YYYY') --1,2
+MINUS 
+SELECT * FROM SALES WHERE SALE_DATE NOT BETWEEN TO_DATE('01/01/2019', 'DD/MM/YYYY')AND
+TO_DATE('31/03/2019', 'DD/MM/YYYY')--2,3
+
+Q18
+
+select distinct author_id as id from Views where author_id = viewer_id order by author_id asc;
+
+Q19
+SELECT ROUND(
+(
+(SELECT COUNT(*)  FROM DELIVERY WHERE ORDER_DATE = CUSTOMER_PREF_DELIVERY_DATE )
+/(SELECT COUNT(*)  FROM DELIVERY)
+*100)
+,2)
+AS PERCENTAGE FROM DUAL;
+
+Q21)select employee_id, 
+         count(*) over(partition by team_id) as team_size
+
+Q22)
+select c.country_name,
+                    case 
+                        when AVG(w.weather_state*1.0) <= 15 then 'Cold'
+                        when AVG(w.weather_state*1.0) >= 25 then 'Hot'
+                        else 'Warm'
+                    end as weather_type
+from Countries as c
+inner JOIN Weather w ON c.country_id = w.country_id 
+where w.day between '2019-11-01' and '2019-11-30' 
+group by c.country_id;
+
+Q23
+
+SELECT b.product_id,
+round(sum(b.price*a.units)/sum(a.units),2)average_price FROM Prices b , UnitsSold a
+where a.product_id=b.product_id and  
+a.purchase_date >= b.start_date and
+a.purchase_date <= b.end_date
+group by b.product_id;
+
+
+Q24
+SELECT player_id,event_date FROM (
+SELECT player_id ,event_date, ROW_NUMBER() OVER(PARTITION BY player_id) AS FIRST_LOGIN 
+ FROM Activity ) T
+WHERE FIRST_LOGIN = 1
+
+Q25
+SELECT player_id,device_id FROM (
+SELECT player_id ,event_date,device_id,ROW_NUMBER() OVER(PARTITION BY player_id) AS FIRST_LOGIN 
+ FROM Activity ) T
+WHERE FIRST_LOGIN = 1;
+
+Q26
+SELECT * FROM (
+SELECT P.product_name,SUM(O.UNIT) UNITS  FROM Products P ,Orders O where P.product_id=O.product_id
+AND O.order_date BETWEEN '2020-02-01' AND '2020-02-28'
+group by P.product_name ) T
+WHERE UNITS >=100
+
+Q28
+
+select customer_id,name,sum from(
+select o.customer_id,c.name,sum(o.quantity*p.price) as sum from Orders o ,Product p,Customers c
+where p.product_id= o.product_id and o.customer_id= c.customer_id
+and o.order_date like '2020-06%'
+--and o.order_date  like '2020-07%'
+group by c.customer_id)A
+where sum>=100 and name
+in (
+select name from(
+select o.customer_id,c.name,sum(o.quantity*p.price) as sum from Orders o ,Product p,Customers c
+where p.product_id= o.product_id and o.customer_id= c.customer_id
+--and o.order_date like '2020-06%'
+and o.order_date  like '2020-07%'
+group by c.customer_id)B
+where sum>=100);
+
+Q28
+select o.customer_id, c.name
+from Customers c, Product p, Orders o
+where c.customer_id = o.customer_id and p.product_id = o.product_id
+group by o.customer_id
+having 
+(
+    sum(case when o.order_date like '2020-06%' then o.quantity*p.price else 0 end) >= 100
+    and
+    sum(case when o.order_date like '2020-07%' then o.quantity*p.price else 0 end) >= 100
+);
+
+Q29
+SELECT c.title from Content c , TVProgram t
+where c.content_id=t.content_id 
+and c.Kids_content ='Y'
+and c.content_type = 'Movies'
+and t.program_date like '2020-06%'
+
+q30 and q31
+SELECT q.id , q.year ,ifnull(n.npv ,0) from Queries q 
+left join NPV n
+ on q.id=n.id
+and q.year=n.year 
+
+q32 
+select u.unique_id, e.name from   Employees e 
+left join EmployeeUNI u 
+on e.id= u.id
+
+Q33
+select * from Rides;
+select* from 
+(SELECT u.name ,ifnull(sum(r.distance),0) as travelled_distance from Users u
+left join Rides r 
+on  r.user_id=u.id 
+group by u.name) a
+order by travelled_distance desc ,name asc ;
+
+Q34
+select * from (
+Select p.product_name ,sum(o.unit) amount from Products p , Orders o
+where p.product_id= o.product_id
+and o.order_date like '2020-02%'
+group by p.product_name) A
+where  amount >=100 
+;
+
+Q36
+select * from Rides;
+select* from 
+(SELECT u.name ,ifnull(sum(r.distance),0) as travelled_distance from Users u
+left join Rides r 
+on  r.user_id=u.id 
+group by u.name) a
+order by travelled_distance desc ,name asc ;
+
+Q35
+Select results from (
+Select distinct u.name results ,count(*) over (partition by u.user_id) count from MovieRating r ,Users u , Movies m
+where r.movie_id =m.movie_id and
+r.user_id=u.user_id
+order by count desc,u.name 
+limit 1
+) A
+union 
+select results from (
+Select distinct m.title results ,AVG(r.rating) over (partition by m.movie_id) sum from MovieRating r ,Users u , Movies m
+where r.movie_id =m.movie_id and
+r.user_id=u.user_id
+and r.created_at like '2020-02%'
+order by sum desc,m.title 
+limit 1)
+b
+
+Q38
+SELECT s.id ,s.name,d.id FROM Students s
+left join Departments d
+on d.id=s.department_id
+where d.id is null;
+
+Q39
+
+SELECT CASE WHEN from_id< to_id THEN from_id ELSE to_id END AS person1,
+CASE WHEN from_id <to_id THEN to_id ELSE from_id END AS person2
+from Calls;
+COUNT(*) AS call_count,
+SUM(duration) AS total_duration
+FROM Calls 
+GROUP BY person1, person2;
+
+Q40 
+Select u.product_id, sum((p.price *u.units)) /sum(u.units) as average_price  from UnitsSold u,Prices p 
+where u.product_id=p.product_id
+and u.purchase_date  BETWEEN p.start_date and p.end_date 
+group by u.product_id;
+
+q41
+Select w.name, sum (p.Width *p.Height * p.Length *w.units) as volume from Warehouse w ,Products p 
+where p.product_id=w.product_id
+group by w.name
+
+
+Q42
+Select S1.sale_date ,(S1.sold_num - S2.sold_num) from Sales S1 ,Sales S2 
+where S1.sale_date=S2.sale_date
+and S1.fruit ='apples' and S2.fruit='oranges';
+
+Q43
+
+
+q44
+select  name  from Employee 
+where id in (select managerId from Employee
+group by managerId
+having count(*)=5 );
+
+
+Q45
+Select distinct d.dept_name , count(s.student_id) over (partition by  d.dept_id) c 
+from  Department d 
+left join Student s 
+on s.dept_id=d.dept_id;
+
+Q46
+Select c.customer_id from Customer c ,Product p
+where c.product_key=p.product_key
+group by c.customer_id
+having count(*) = (select count(*) from Product )s
+
+
+Q47)
+select project_id,employee_id from (
+Select  p.project_id , dense_rank() 
+OVER ( partition by project_id order by e.experience_years desc ) rnk,
+e.experience_years exp ,e.employee_id
+from Project p, Employee e
+where e.employee_id = p.employee_id ) a
+where rnk=1;
+
+Q48 doubtfull 
+
+Select b.book_id ,b.name  from Books b ,Orders o 
+where o.book_id=b.book_id 
+and  available_from < '2019-05-23'
+    and dispatch_date between '2018-06-23' and '2019-06-23'
+group by b.book_id
+having sum (o.quantity)<10
+
+
+Q49
+select student_id,course_id,grade from (
+Select *, row_number() 
+over (partition by student_id order by grade desc ) rnk
+from Enrollments )a
+where rnk=1;
+
+
+q50
+
+
+
+
+
