@@ -69,13 +69,34 @@ Perform below menioned queries on "sales_order_orc" table :
 
 a. Calculatye total sales per year
 select year_id, sum(sales) over(partition by year_id) from sales_order_csv;
+
 b. Find a product for which maximum orders were placed
 Select max(QUANTITYORDERED) ,PRODUCTLINE from sales_order_csv group by QUANTITYORDERED;
+
 c. Calculate the total sales for each quarter
+Select sum(sales),QTR_ID FROM sales_order_csv
+GROUP BY QTR_ID;
 
 d. In which quarter sales was minimum
 
+select QTR_ID from (
+Select MIN(sales) sls, QTR_ID FROM sales_order_csv
+GROUP BY QTR_ID
+ORDER BY sls
+limit 1)A;
+
 e. In which country sales was maximum and in which country sales was minimum
-select sum(sales) over (partition by country) from ales_order_csv
+
+Select country from (Select sum(sales) sls,country from sales_order_csv 
+group by country
+order by sls desc
+limit 1)a
+union 
+Select country from (Select sum(sales) sls,country from sales_order_csv 
+group by country
+order by sls
+limit 1)b
+
 f. Calculate quartelry sales for each city
+
 h. Find a month for each year in which maximum number of quantities were sold
