@@ -102,8 +102,5 @@ SELECT SUM(SALES),QTR_ID,CITY FROM sales_order_csv
 GROUP BY CITY,QTR_ID;
 
 h. Find a month for each year in which maximum number of quantities were sold
-SELECT MONTH_ID,YEAR_ID FROM (
-Select MONTH_ID,YEAR_ID,MAX(SALES) SLS FROM sales_order_csv
-GROUP BY MONTH_ID,year_id
-ORDER BY SLS DESC)A
-GROUP BY MONTH_ID,YEAR_ID;
+Select MONTH_ID,YEAR_ID,MAX(SALES) OVER (PARTITION BY MONTH_ID,YEAR_ID) SLS FROM sales_order_csv
+ORDER BY SLS DESC;;
