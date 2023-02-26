@@ -54,6 +54,7 @@ Select distinct agent_name, sum(total_chats) over (partition by agent_name) tota
 select distinct agent_name,sum(total_feedback) over(partition by agent_name) total_feedback from agent_performance;
 
 8. Agent name who have average rating between 3.5 to 4 
+select distinct agent_name from agent_performance where average_rating between 3.5 and 4
 9. Agent name who have rating less than 3.5 
 10. Agent name who have rating more than 4.5 
 11. How many feedback agents have received more than 4.5 average
