@@ -1,0 +1,11 @@
+create table agent_perf
+(
+SL_No int,
+Agent string,
+Date string,,
+Login_Time string,,
+Logout_Time string,,
+Duration string,
+)
+row format delimited
+fields terminated by ',';
