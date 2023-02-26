@@ -34,7 +34,7 @@ create hive_project;
 
 2. Dump the data inside the hdfs in the given schema location.
 hadoop fs -put AgentPerformance.csv /tmp
-hadoop fs -put AgentLogingReports.csv /tmp
+hadoop fs -put AgentLogingReport.csv /tmp
 
 3. List of all agents' names. 
 Select Distinct Agent_name from agent_performance 
@@ -42,9 +42,17 @@ union
 Select Distinct Agent from agent_Log;
 
 4. Find out agent average rating.
+Select agent_name,Average_Rating from agent_performance;
+
 5. Total working days for each agents 
+Select agent, count(distinct date_)  from agent_Log group by agent;
+
 6. Total query that each agent have taken 
+Select distinct agent_name, sum(total_chats) over (partition by agent_name) total from agent_performance;
+
 7. Total Feedback that each agent have received 
+select distinct agent_name,sum(total_feedback) over(partition by agent_name) total_feedback from agent_performance;
+
 8. Agent name who have average rating between 3.5 to 4 
 9. Agent name who have rating less than 3.5 
 10. Agent name who have rating more than 4.5 
@@ -55,3 +63,5 @@ Select Distinct Agent from agent_Log;
 15. Total contribution hour for each and every agents weekly basis 
 16. Perform inner join, left join and right join based on the agent column and after joining the table export that data into your local system.
 17. Perform partitioning on top of the agent column and then on top of that perform bucketing for each partitioning.
+
+
