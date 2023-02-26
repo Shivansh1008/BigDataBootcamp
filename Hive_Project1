@@ -26,6 +26,9 @@ Total_Feedback int
 row format delimited
 fields terminated by ',';
 
+load data inpath '/tmp/AgentLogingReport.csv' into table agent_Log;
+load data inpath '/tmp/AgentPerformance.csv' into table agent_performance;
+
 1. Create a schema based on the given dataset
 create hive_project;
 
