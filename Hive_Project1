@@ -39,7 +39,7 @@ hadoop fs -put AgentLogingReports.csv /tmp
 3. List of all agents' names. 
 Select Distinct Agent_name from agent_performance 
 union
-Select Distinct Agent from agent_Loging;
+Select Distinct Agent from agent_Log;
 
 4. Find out agent average rating.
 5. Total working days for each agents 
