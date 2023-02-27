@@ -1,4 +1,4 @@
-create table agent_Loging
+create table agent_Log
 (
 SL_No int,
 Date_ string,
@@ -54,15 +54,35 @@ Select distinct agent_name, sum(total_chats) over (partition by agent_name) tota
 select distinct agent_name,sum(total_feedback) over(partition by agent_name) total_feedback from agent_performance;
 
 8. Agent name who have average rating between 3.5 to 4 
-select distinct agent_name from agent_performance where average_rating between 3.5 and 4
+select distinct agent_name from agent_performance where average_rating between 3.5 and 4;
+
 9. Agent name who have rating less than 3.5 
+select distinct agent_name from agent_performance where average_rating < 3.5 ;
+
 10. Agent name who have rating more than 4.5 
+select distinct agent_name from agent_performance where average_rating >4.5;
+
 11. How many feedback agents have received more than 4.5 average
+select distinct agent_name from agent_performance where total_feedback >4.5
+
 12. average weekly response time for each agent 
+
 13. average weekly resolution time for each agents 
+
 14. Find the number of chat on which they have received a feedback 
+Select sum(Total_feedback) from agent_performance ;   --9259
+
 15. Total contribution hour for each and every agents weekly basis 
+
+
 16. Perform inner join, left join and right join based on the agent column and after joining the table export that data into your local system.
+select distinct a.agent_name from agent_performance a ,agent_Loging b where a.agent_name = b.agent;
+select distinct a.agent_name from agent_performance a left join agent_Loging b on a.agent_name = b.agent;
+select distinct a.agent_name from agent_performance a right join agent_Loging b on a.agent_name = b.agent
+
+
+
+
 17. Perform partitioning on top of the agent column and then on top of that perform bucketing for each partitioning.
 
 
