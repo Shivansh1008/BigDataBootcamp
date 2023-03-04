@@ -116,3 +116,15 @@ select SL_No,Date_,Login_Time,Logout_Time,Duration,Agent from agent_Log;
 
 insert overwrite table agent_performance_part partition(Agent) 
 select SL_No,Date_,Total_Chats,Average_Response_Time,Average_Resolution_Time,Average_Rating,Total_Feedback,Agent from agent_performance;
+
+create table agent_Log_Part_bucket
+(
+SL_No int,
+Date_ string,
+Login_Time string,
+Logout_Time string,
+Duration string
+)partitioned by (Agent string)
+clustered by (Date_) into 30 buckets;
+
+insert overwrite table agent_Log_Part_bucket  select * from agent_Log;
