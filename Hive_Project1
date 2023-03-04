@@ -1,8 +1,8 @@
 create table agent_Log
 (
 SL_No int,
-Date_ string,
 Agent string,
+Date_ string,
 Login_Time string,
 Logout_Time string,
 Duration string
