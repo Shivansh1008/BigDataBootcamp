@@ -1,3 +1,6 @@
+hadoop fs -ls /user/hive
+
+
 create table agent_Log
 (
 SL_No int,
