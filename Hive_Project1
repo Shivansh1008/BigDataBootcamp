@@ -88,4 +88,31 @@ select distinct a.agent_name from agent_performance a right join agent_Loging b 
 
 17. Perform partitioning on top of the agent column and then on top of that perform bucketing for each partitioning.
 
+create table agent_Log_Part
+(
+SL_No int,
+Date_ string,
+Login_Time string,
+Logout_Time string,
+Duration string
+)partitioned by (Agent string)
+;
 
+Create table agent_performance_part
+(
+SL_No int,
+Date_ string,
+Total_Chats int,
+Average_Response_Time string,
+Average_Resolution_Time string,
+Average_Rating decimal(5,2),
+Total_Feedback int
+)partitioned by (Agent string);
+
+
+insert overwrite table agent_Log_Part partition(Agent) 
+select SL_No,Date_,Login_Time,Logout_Time,Duration,Agent from agent_Log;
+
+
+insert overwrite table agent_performance_part partition(Agent) 
+select SL_No,Date_,Total_Chats,Average_Response_Time,Average_Resolution_Time,Average_Rating,Total_Feedback,Agent from agent_performance;
