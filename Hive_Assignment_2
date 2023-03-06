@@ -62,10 +62,45 @@ Download a data from the given location -
 https://archive.ics.uci.edu/ml/machine-learning-databases/00360/
 
 1. Create a hive table as per given schema in your dataset 
+Create table Airquality
+ (
+ Date_ string,
+ Time_ string,
+ COGT string,
+ PT08_S1CO int,
+ NMHC_GT int,
+ C6H6_GT string,
+ PT08_S2_NMHC string,
+ NOx_GT string,
+ PT08_S3_NOx string,
+ NO2_GT string,
+ PT08_S4_NO2 string,
+ PT08_S5_O3 string,
+ T string,
+ RH string,
+ AH string
+ )
+ row format serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'                                                                           
+  with serdeproperties (                                                                                                                  
+ "separatorChar" = ";",                                                                                                                 
+ "quoteChar" = "\"",                                                                                                                    
+ "escapeChar" = "\\"                                                                                                                    
+  )                                                                                                                                       
+  stored as textfile                                                                                                                      
+  tblproperties ("skip.header.line.count" = "1"); 
+  
 2. try to place a data into table location
+hadoop fs -put Airquality.csv /tmp
+load data inpath '/tmp/AgentLogingReport.csv' into table agent_Log;
+
 3. Perform a select operation . 
+Select * from Airqulaity limit 25;
+
 4. Fetch the result of the select operation in your local as a csv file . 
+
 5. Perform group by operation . 
+
+
 7. Perform filter operation at least 5 kinds of filter examples . 
 8. show and example of regex operation
 9. alter table operation 
@@ -87,33 +122,3 @@ hive operation with python
 
 Create a python application that connects to the Hive database for extracting data, creating sub tables for data processing, drops temporary tables.fetch rows to python itself into a list of tuples and mimic the join or filter operations
 Footer
-
-
-
-
-Create table Airquality
- (
- Date_ string,
- Time_ string,
- CO(GT) string,
- PT08.S1(CO) int,
- NMHC(GT) int,
- C6H6(GT) string,
- PT08.S2(NMHC) string,
- NOx(GT) string,
- PT08.S3(NOx) string,
- NO2(GT) string,
- PT08.S4(NO2) string,
- PT08.S5(O3) string,
- T string,
- RH string,
- AH string,
- )
- row format serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'                                                                           
-  with serdeproperties (                                                                                                                  
- "separatorChar" = ";",                                                                                                                 
- "quoteChar" = "\"",                                                                                                                    
- "escapeChar" = "\\"                                                                                                                    
-  )                                                                                                                                       
-  stored as textfile                                                                                                                      
-  tblproperties ("skip.header.line.count" = "1"); 
