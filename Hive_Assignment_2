@@ -50,11 +50,27 @@ Hive Practical questions:
 Hive Join operations
 
 Create a  table named CUSTOMERS(ID | NAME | AGE | ADDRESS   | SALARY)
-Create a Second  table ORDER(OID | DATE | CUSTOMER_ID | AMOUNT
-)
+Create table CUSTOMERS
+(ID int,
+NAME string,
+AGE string,
+ADDRESS string,
+SALARY string
+);
+
+Create a Second  table ORDER(OID | DATE | CUSTOMER_ID | AMOUNT)
+
+Create table Order
+(OID int,DATE_ string,CUSTOMER_ID int,AMOUNT int);
+
 
 Now perform different joins operations on top of these tables
 (Inner JOIN, LEFT OUTER JOIN ,RIGHT OUTER JOIN ,FULL OUTER JOIN)
+
+Select * from order O ,Customers C where O.OID=C.ID;
+Select * from order O left join Customers C on O.OID=C.ID;
+Select * from order O right join Customers C on O.OID=C.ID;
+Select * from order O  full outer join Customers C on O.OID=C.ID;
 
 BUILD A DATA PIPELINE WITH HIVE
 
