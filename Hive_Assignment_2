@@ -104,14 +104,28 @@ Select * from Airqulaity limit 25;
 7. Perform filter operation at least 5 kinds of filter examples . 
 8. show and example of regex operation
 9. alter table operation 
+Altr table Airquality rename to Airquality_01;
+
 10 . drop table operation
-12 . order by operation . 
+Drop table Airquality;
+
+12 . order by operation .
+Select * from Airquality order by Date_;
 13 . where clause operations you have to perform . 
-14 . sorting operation you have to perform . 
+Select * from Airquality where PT08_S1CO = 1360;
+
+14 . sorting operation you have to perform .
+Select * from Airquality sort by Date_;
+
 15 . distinct operation you have to perform . 
+Select distinct date_ from Airquality;
+
 16 . like an operation you have to perform . 
-17 . union operation you have to perform . 
+
+17 . union operation you have to perform .
+
 18 . table view operation you have to perform . 
+create view Airquality_view as select * from Airquality limit 100;
 
 
 
