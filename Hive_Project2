@@ -108,6 +108,12 @@ limit 5;
 order by count desc
 limit 5;
 
+127545  0
+42057   19
+29745   14
+29446   1
+23485   18
+
       b.) Issuer Precincts (this is the precinct that issued the ticket)
 
 select * from
@@ -115,6 +121,11 @@ select * from
 order by count desc
 limit 5;
 
+143143  0
+41159   19
+29061   14
+28554   1
+22448   18
 
 4.) Find the violation code frequency across 3 precincts which have issued the most number of tickets - do these precinct zones have an exceptionally high frequency of certain violation codes?
 5.) Find out the properties of parking violations across different times of the day: The Violation Time field is specified in a strange format. Find a way to make this into a time attribute that you can use to divide into groups.
