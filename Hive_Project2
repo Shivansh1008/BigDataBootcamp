@@ -77,8 +77,17 @@ limit 5;
 71606   14
 67779   20
 
+ 2.) How often does each vehicle body type get a parking ticket? How about the vehicle make? (find the top 5 for both)
+select * from
+(Select count(*) count ,Vehicle_Body_Type from Parking group by Vehicle_Body_Type )a
+order by count desc
+limit 5;
 
-2.) How often does each vehicle body type get a parking ticket? How about the vehicle make? (find the top 5 for both)
+select * from
+(Select count(*) count ,Vehicle_Make  from Parking group by Vehicle_Make )a
+order by count desc
+limit 5;
+
 3.) A precinct is a police station that has a certain zone of the city under its command. Find the (5 highest) frequencies of:
       a.) Violating Precincts (this is the precinct of the zone where the violation occurred)
       b.) Issuer Precincts (this is the precinct that issued the ticket)
