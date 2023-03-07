@@ -66,6 +66,18 @@ select count(*) from Parking where Street_Code1 is null or Street_Code2 is null 
 Part-II: Aggregation tasks
 
 1.) How often does each violation code occur? (frequency of violation codes - find the top 5)
+select * from 
+(Select count(*) count ,violation_code from Parking group by Violation_Code )a
+order by count desc
+limit 5;
+
+95651   38
+94684   21
+87064   36
+71606   14
+67779   20
+
+
 2.) How often does each vehicle body type get a parking ticket? How about the vehicle make? (find the top 5 for both)
 3.) A precinct is a police station that has a certain zone of the city under its command. Find the (5 highest) frequencies of:
       a.) Violating Precincts (this is the precinct of the zone where the violation occurred)
