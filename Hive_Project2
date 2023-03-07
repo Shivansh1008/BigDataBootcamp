@@ -83,14 +83,39 @@ select * from
 order by count desc
 limit 5;
 
+292851  SUBN
+231069  4DSD
+120199  VAN
+49744   DELV
+22301   PICK
+
 select * from
 (Select count(*) count ,Vehicle_Make  from Parking group by Vehicle_Make )a
 order by count desc
 limit 5;
 
+102078  FORD
+93586   TOYOT
+82259   HONDA
+70537   NISSA
+53376   CHEVR
+
 3.) A precinct is a police station that has a certain zone of the city under its command. Find the (5 highest) frequencies of:
       a.) Violating Precincts (this is the precinct of the zone where the violation occurred)
+     
+    select * from
+(Select count(*) count, Violation_Precinct from Parking group by Violation_Precinct )a
+order by count desc
+limit 5;
+
       b.) Issuer Precincts (this is the precinct that issued the ticket)
+
+select * from
+(Select count(*) count, Issuer_Precinct from Parking group by Issuer_Precinct )a
+order by count desc
+limit 5;
+
+
 4.) Find the violation code frequency across 3 precincts which have issued the most number of tickets - do these precinct zones have an exceptionally high frequency of certain violation codes?
 5.) Find out the properties of parking violations across different times of the day: The Violation Time field is specified in a strange format. Find a way to make this into a time attribute that you can use to divide into groups.
 6.) Divide 24 hours into 6 equal discrete bins of time. The intervals you choose are at your discretion. For each of these groups, find the 3 most commonly occurring violations
