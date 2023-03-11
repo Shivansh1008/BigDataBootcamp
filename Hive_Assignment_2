@@ -107,7 +107,7 @@ Create table Airquality
   
 2. try to place a data into table location
 hadoop fs -put Airquality.csv /tmp
-load data inpath '/tmp/AgentLogingReport.csv' into table agent_Log;
+load data inpath '/tmp/Airquality.csv' into table Airqulaity;
 
 3. Perform a select operation . 
 Select * from Airqulaity limit 25;
