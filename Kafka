@@ -1,0 +1,208 @@
+import random
+import string
+import mysql.connector
+from mysql.connector import Error
+# Set up MySQL connection
+try:
+
+    connection = mysql.connector.connect(
+    host="localhost",
+    user="username",
+    password="password",
+    database="mydatabase"
+    )
+except Error as e:
+    print("Error connecting to MySQL database:", e)
+    exit()
+# Loop indefinitely and insert random data into MySQL table
+
+while True:
+
+    try:
+
+        # Generate random data
+
+        name =''.join(random.choices(string.ascii_letters, k=7))
+
+        age = random.randint(18, 60)
+
+        email = name.lower() + "@example.com"
+
+        country = random.choice(["USA", "Canada", "UK", "Australia", "Germany"])
+
+
+        # Insert data into MySQL table
+
+        cursor = connection.cursor()
+
+        query = "INSERT INTO employee (name, age, email, country) VALUES (%s, %s, %s, %s)"
+
+        values = (name, age, email, country)
+
+        cursor.execute(query, values)
+
+        connection.commit()
+
+        print("Data inserted successfully!")
+
+        cursor.close()
+
+
+        # Sleep for a random amount of time before inserting next set of data
+
+        time.sleep(random.randint(5, 10))
+
+    except Error as e:
+
+        print("Error inserting data into MySQL table:", e)
+
+
+# Close MySQL connection when loop is exited
+
+connection.close()
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import argparse
+from uuid import uuid4
+from six.moves import input
+from confluent_kafka import Producer
+from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
+from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry.json_schema import JSONSerializer
+#from confluent_kafka.schema_registry import *
+import pandas as pd
+from typing import List
+
+columns=['nam', 'age', 'email', 'country']
+
+API_KEY = 'HCBRVB54E2TFDNVO'
+ENDPOINT_SCHEMA_URL  = 'https://psrc-epkz2.ap-southeast-2.aws.confluent.cloud'
+API_SECRET_KEY = 'oCEA0rTyVDrw4eMDq6BXNx1AbdHt+4AtCu/Pz2DbUaO10R1mrofmRsnJdfG7qVdd'
+BOOTSTRAP_SERVER = 'pkc-l7pr2.ap-south-1.aws.confluent.cloud:9092'
+SECURITY_PROTOCOL = 'SASL_SSL'
+SSL_MACHENISM = 'PLAIN'
+SCHEMA_REGISTRY_API_KEY = 'JU22OSOMINSRFVTT'
+SCHEMA_REGISTRY_API_SECRET = 'D0456tLryJO8tbukigXFJJA2r9Xrd6Trvch85cYWMsmkAIOfemGxWa69X5FJCshJ'
+
+
+def sasl_conf():
+
+    sasl_conf = {'sasl.mechanism': SSL_MACHENISM,
+                 # Set to SASL_SSL to enable TLS support.
+                #  'security.protocol': 'SASL_PLAINTEXT'}
+                'bootstrap.servers':BOOTSTRAP_SERVER,
+                'security.protocol': SECURITY_PROTOCOL,
+                'sasl.username': API_KEY,
+                'sasl.password': API_SECRET_KEY
+                }
+    return sasl_conf
+
+
+
+def schema_config():
+    return {'url':ENDPOINT_SCHEMA_URL,
+    
+    'basic.auth.user.info':f"{SCHEMA_REGISTRY_API_KEY}:{SCHEMA_REGISTRY_API_SECRET}"
+
+    }
+
+class create_dict(dict): 
+   
+    def __init__(self): 
+        self = dict() 
+    
+    def add(self, key, value): 
+        self[key] = value
+        
+
+
+
+
+
+def delivery_report(err, msg):
+
+    """
+    Reports the success or failure of a message delivery.
+    Args:
+        err (KafkaError): The error that occurred on None on success.
+        msg (Message): The message that was produced or failed.
+    """
+
+    if err is not None:
+        print("Delivery failed for User record {}: {}".format(msg.key(), err))
+        return
+    print('User record {} successfully produced to {} [{}] at offset {}'.format(
+        msg.key(), msg.topic(), msg.partition(), msg.offset()))
+        
+# Query the MySQL database
+query = "SELECT * FROM employee"
+cursor.execute(query)
+rows = cursor.fetchall()
+
+
+def main(topic):
+    schema_registry_conf = schema_config()
+    schema_registry_client = SchemaRegistryClient(schema_registry_conf)
+    # subjects = schema_registry_client.get_subjects()
+    # print(subjects)
+    subject = topic+'-value'
+
+    schema = schema_registry_client.get_latest_version(subject)
+    schema_str=schema.schema.schema_str
+
+    string_serializer = StringSerializer('utf_8')
+    json_serializer = JSONSerializer(schema_str, schema_registry_client, car_to_dict)
+
+    producer = Producer(sasl_conf())
+
+    print("Producing user records to topic {}. ^C to exit.".format(topic))
+    #while True:
+        # Serve on_delivery callbacks from previous calls to produce()
+    producer.poll(0.0)
+    try:
+        for row in rows():
+            print()
+            producer.produce(topic=topic,
+                            key=string_serializer(str(uuid4())),
+                            value=json_serializer(row, SerializationContext(topic, MessageField.VALUE)),
+                            on_delivery=delivery_report)
+            break
+    except KeyboardInterrupt:
+        pass
+    except ValueError:
+        print("Invalid input, discarding record...")
+        pass
+
+    print("\nFlushing records...")
+    producer.flush()
+
+main("Employee_topic")
+
+
+# Publish the rows to Kafka
+#for row in rows:
+   #message = json.dumps(row)
+   #producer.produce(topic, message.encode('utf-8'))
+
+#for row in result:
+    #mydict.add(row[0],({"name":row[1],"email":row[2],"phone":row[3]}))
