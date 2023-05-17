@@ -1,0 +1,39 @@
+import cassandra
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
+cloud_config= {
+  'secure_connect_bundle': 'D:\kafka\secure-connect-kakfa-assaignment.zip'
+}
+auth_provider = PlainTextAuthProvider('UdjJJQtqFLqlLmUyeWAgIIzE', 'NArq0Rt,AUk+IAP2nb216UoGENif5G9RZs0q-Hcu9BTpMlC-+h3zqw2c+_IAysjIKY-.n3ZfZDUyCmXXmwve.iDvO4Sjt,.bPqR-X1fucA6W3bCQmr5qew0iT7lREb8s')
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect()
+session.set_keyspace('big_data')
+
+table_query = """
+    CREATE TABLE IF NOT EXISTS Kakfa_assaignment (
+        message TEXT PRIMARY KEY,
+        value TEXT
+    )
+"""
+#session.execute(table_query)
+
+query = "SELECT * FROM Kakfa_assaignment"
+result = session.execute(query)
+
+# Process the results
+for row in result:
+    # Access row values by column name or index
+    print(row)
+
+# Close the Cassandra connection
+#session.shutdown()
+#cluster.shutdown()
+
+
+
+
+
+
+
+
