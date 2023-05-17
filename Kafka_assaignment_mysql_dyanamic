@@ -1,0 +1,50 @@
+import random
+import time
+import string
+import mysql.connector
+from mysql.connector import Error
+# Set up MySQL connection
+try:
+
+    connection = mysql.connector.connect(
+    host="localhost",
+    user="abc",
+    password="password",
+    database="kafka"
+    )
+except Error as e:
+    print("Error connecting to MySQL database:", e)
+    exit()
+# Loop indefinitely and insert random data into MySQL table
+
+while True:
+
+    try:
+        for i in range (200):
+    # Generate random data
+
+            name =''.join(random.choices(string.ascii_letters, k=7))
+            gender = random.choice(["Male","Female"])
+            email = name.lower() + "@xyz.com"
+            country = random.choice(["USA", "India", "UK", "Australia", "Nepal"])
+                    
+            # Insert data into MySQL table
+
+            cursor = connection.cursor()
+            query = "INSERT INTO employee (name, gender, email, country) VALUES (%s, %s, %s, %s)"
+            values = (name, gender, email, country)
+            cursor.execute(query, values)
+            connection.commit()
+            print("Data inserted successfully!")
+            cursor.close()
+            
+    # Sleep for a random amount of time before inserting next set of data
+        time.sleep(random.randint(5, 10))
+        
+    except Error as e:
+        print("Error inserting data into MySQL table:", e)
+
+
+    # Close MySQL connection when loop is exited
+
+connection.close()
