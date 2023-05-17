@@ -1,9 +1,11 @@
 import argparse
-
 from confluent_kafka import Consumer
 from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry.json_schema import JSONDeserializer
 from confluent_kafka.schema_registry import SchemaRegistryClient
+import cassandra
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
 
 API_KEY = 'KI3UKMZVFHR72PPX'
 ENDPOINT_SCHEMA_URL  = 'https://psrc-znpo0.ap-southeast-2.aws.confluent.cloud'
@@ -43,6 +45,24 @@ class Employee:
     def dict_to_emp(data:dict,ctx):
         return Employee(record=data)
 
+#cassandra connection
+
+cloud_config= {
+  'secure_connect_bundle': 'D:\kafka\secure-connect-kakfa-assaignment.zip'
+}
+auth_provider = PlainTextAuthProvider('UdjJJQtqFLqlLmUyeWAgIIzE', 'NArq0Rt,AUk+IAP2nb216UoGENif5G9RZs0q-Hcu9BTpMlC-+h3zqw2c+_IAysjIKY-.n3ZfZDUyCmXXmwve.iDvO4Sjt,.bPqR-X1fucA6W3bCQmr5qew0iT7lREb8s')
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect()
+session.set_keyspace('big_data')
+
+table_query = """
+    CREATE TABLE IF NOT EXISTS Kakfa_assaignment (
+        message TEXT,
+        value TEXT
+    )
+"""
+#session.execute(table_query)
+
 
 
 def main(topic):
@@ -77,6 +97,8 @@ def main(topic):
             emp = json_deserializer(msg.value(), SerializationContext(msg.topic(), MessageField.VALUE))
 
             if emp is not None:
+                query = f"INSERT INTO Kakfa_assaignment (message) VALUES ('{emp}')"
+                session.execute(query)
                 print("User record {}: emp: {}\n"
                       .format(msg.key(), emp))
         except KeyboardInterrupt:
