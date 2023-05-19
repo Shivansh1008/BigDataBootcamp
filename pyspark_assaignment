@@ -1,0 +1,59 @@
+from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType,StructField, StringType, IntegerType
+
+
+if __name__ == '__main__':
+    #Creating spark session
+    spark = SparkSession.builder.master("spark://localhost:7077").appName("demo").getOrCreate()
+
+df3 = spark.read.option("header",True).option("inferSchema",True).csv("/input_data/Region.csv")
+df1.printSchema()
+
+df2 = spark.read.option("header",True).option("inferSchema",True).csv("/input_data/TimeProvince.csv")
+
+df1 = spark.read.option("header",True).option("inferSchema",True).csv("/input_data/Case.csv")
+
+df1.count()  -- 244
+df1.count() ---2771
+df1.count()  --174
+
+df1.show()
+
+df1.show(10)
+
+df1.describe().show()
+
+df1.dropDuplicates().show()
+
+df1.withColumnRenamed(" case_id","id").show()
+
+df1.select("city","group").show(5)
+
+
+df1.dropna().show(5)
+
+df = df1.filter((df1.province == 'Daegu') & (df1.confirmed > 10))
+
+df_o = df1.filter((df1.province == 'Daegu') & (df1.confirmed > 10)).orderBy(col("confirmed").desc())
+
+#In case of any wrong data type, cast that data type from
+#integer to string or string to integer.
+
+
+>>> df = df1.withColumn("group", col("group").cast("string"))
+
+#Use group by on top of province and city column and agg it
+#with sum of confirmed cases.
+
+ empdf1.groupBy("province","city").sum("confirmed").show()
+
+
+ joined_df = df1.join(df2, df1.column_name == df2.column_name, "inner")
+
+
+newDF = sqlContext.sql('select * from case where
+confirmed>100')
+
+df1.createOrReplaceTempView("case")
+
+spark.sql(" select * from case where confirmed> 100 limit 5 ").show()
